@@ -1,6 +1,8 @@
 package baitap;
 
 import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,9 +28,28 @@ public class bmi extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		OutputStream out= response.getOutputStream();
+		
+		String height= request.getParameter("height") ;
+		String weight= request.getParameter("weight") ;
+		
+	 if ((height== null) || ( weight.length()==0)) {
+		 throw new IllegalArgumentException ("height is required");
+	 }
+	 
+	 if ((height== null) || ( weight.length()==0)) {
+		 throw new IllegalArgumentException ("height is required");
+	 }
+	 float heightVal=Float.valueOf(height);
+	 float weightVal=Float.valueOf(weight);
+	 
+	 float bmi = (weightVal / (heightVal * heightVal)  ) *703;
+	 
+	 String result="your BMI index is:"+bmi;
+	 out.write (result.getBytes());
 	}
+				
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
